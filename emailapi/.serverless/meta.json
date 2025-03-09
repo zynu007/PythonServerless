@@ -1,0 +1,71 @@
+{
+  "C:\\Users\\user\\Desktop\\serverless\\emailapi\\serverless.yml": {
+    "versionFramework": "4.7.0",
+    "servicePath": "C:\\Users\\user\\Desktop\\serverless\\emailapi\\serverless.yml",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "service": "email-service",
+      "frameworkVersion": "4.7.0",
+      "provider": {
+        "name": "aws",
+        "runtime": "python3.9",
+        "stage": "dev",
+        "region": "${opt:region, 'us-east-1'}",
+        "environment": {
+          "GMAIL_USER": "${env:GMAIL_USER, 'zynu007@gmail.com'}",
+          "GMAIL_PASSWORD": "<REDACTED>"
+        }
+      },
+      "plugins": [
+        "serverless-offline"
+      ],
+      "functions": {
+        "sendEmail": {
+          "handler": "handler.send_email",
+          "events": [
+            {
+              "http": {
+                "path": "send-email",
+                "method": "post",
+                "cors": true
+              }
+            }
+          ]
+        },
+        "serveForm": {
+          "handler": "handler.serve_form",
+          "events": [
+            {
+              "http": {
+                "path": "email-form",
+                "method": "get",
+                "cors": true
+              }
+            }
+          ]
+        }
+      }
+    },
+    "provider": {
+      "name": "aws",
+      "runtime": "python3.9",
+      "stage": "dev",
+      "region": "${opt:region, 'us-east-1'}",
+      "environment": {
+        "GMAIL_USER": "${env:GMAIL_USER, 'zynu007@gmail.com'}",
+        "GMAIL_PASSWORD": "<REDACTED>"
+      }
+    },
+    "serviceRawFile": "service: email-service\r\n\r\nframeworkVersion: '4.7.0'\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: python3.9\r\n  stage: ${opt:stage, 'dev'}\r\n  region: ${opt:region, 'us-east-1'}\r\n  environment:\r\n    GMAIL_USER: ${env:GMAIL_USER, 'zynu007@gmail.com'}\r\n    GMAIL_PASSWORD: ${env:GMAIL_PASSWORD, 'jlcqhlrgayovcktx'}\r\n    \r\nplugins:\r\n  - serverless-offline\r\n\r\nfunctions:\r\n  sendEmail:\r\n    handler: handler.send_email\r\n    events:\r\n      - http:\r\n          path: send-email\r\n          method: post\r\n          cors: true\r\n  \r\n  # Serve the HTML form\r\n  serveForm:\r\n    handler: handler.serve_form\r\n    events:\r\n      - http:\r\n          path: email-form\r\n          method: get\r\n          cors: true",
+    "command": [],
+    "options": {
+      "template": "aws-python3",
+      "name": "emailapi"
+    },
+    "serviceProviderAwsCfStackId": null,
+    "serviceProviderAwsCfStackCreated": null,
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": null,
+    "serviceProviderAwsCfStackOutputs": null
+  }
+}

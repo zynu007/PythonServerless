@@ -1,0 +1,36 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: personaltestenv
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: emailapi
+service: email-service
+
+
+provider:
+  name: aws
+  runtime: python3.9
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  environment:
+    GMAIL_USER: ${env:GMAIL_USER, 'test@gmail.com'}
+    GMAIL_PASSWORD: ${env:GMAIL_PASSWORD, 'testtesttest'}
+    
+plugins:
+  - serverless-offline
+
+functions:
+  sendEmail:
+    handler: handler.send_email
+    events:
+      - http:
+          path: send-email
+          method: post
+          cors: true
+  
+  # Serve the HTML form
+  serveForm:
+    handler: handler.serve_form
+    events:
+      - http:
+          path: email-form
+          method: get
+          cors: true
